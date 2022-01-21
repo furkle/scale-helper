@@ -1,0 +1,24 @@
+{
+  "name": "scale-helper",
+  "version": "1.0.0",
+  "description": "A set of helper methods and a front-end interface for musical scales and chord patterns.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furkle/scale-helper.git"
+  },
+  "author": "furkle",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/furkle/scale-helper/issues"
+  },
+  "homepage": "https://github.com/furkle/scale-helper#readme",
+  "dependencies": {
+    "jest": "^27.4.7",
+    "react": "^17.0.2",
+    "typescript": "^4.5.5"
+  }
+}
