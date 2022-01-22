@@ -5,7 +5,7 @@ import { Scale } from './Scale';
 import { ScalePatterns } from './ScalePatterns';
 import { scaleRecord } from './scaleRecord';
 
-export const GetScale = (root: NoteNames, pattern: ScalePatterns, rootOctave = 4): Scale => {
+export const getScale = (root: NoteNames, pattern: ScalePatterns, rootOctave = 4): Scale => {
   return {
     root,
     notes: getScaleNotes(root, pattern, rootOctave),
@@ -24,24 +24,12 @@ export const getScaleNotes = (root: NoteNames, pattern: ScalePatterns, octave = 
       incrementedOctave = true;
     }
 
-    return {
-      name: noteBase,
-      octave: curOctave,
-      get frequency() {
-        return getFrequency(this.name, this.octave);
-      },
-    };
+    return new Note(noteBase, curOctave);
   });
 };
 
 export const BaseNotes: Record<NoteNames, Note> = (Object.values(NoteNames) as NoteNames[]).reduce((notes, name) => {
-  notes[name] = {
-    name,
-    get frequency() {
-      return getFrequency(this.name, this.octave);
-    }
-  };
-
+  notes[name] = new Note(name);
   return notes;
 }, {} as Record<NoteNames, Note>);
 

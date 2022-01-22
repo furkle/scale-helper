@@ -15,16 +15,19 @@ const noteFilter = (val: NoteType) => (
 
 export const Notes = ({
   audioCtx,
+  gainNode,
   oscNode,
-}: { audioCtx: AudioContext, oscNode: OscillatorNode }) => {
+}: { audioCtx: AudioContext, gainNode: GainNode, oscNode: OscillatorNode }) => {
     return (
       <div>
+        <h2>Notes</h2>
         <ul>
           {Object.values(BaseNotes).filter(noteFilter).map((note) => (
-            <li>
+            <li key={note.name}>
               <Note
                 audioCtx={audioCtx}
                 data={note}
+                gainNode={gainNode}
                 oscNode={oscNode}
               />
             </li>

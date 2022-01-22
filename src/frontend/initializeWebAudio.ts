@@ -1,12 +1,11 @@
-export const initializeWebAudio = (options: AudioContextOptions = { sampleRate: 48000 }) => {
+export const initializeWebAudio = (options: AudioContextOptions = {}) => {
   const audioCtx = new AudioContext(options);
 
   const gainNode = audioCtx.createGain();
-  gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
 
   const oscNode = audioCtx.createOscillator();
-  oscNode.frequency.setValueAtTime(1, audioCtx.currentTime);
-  oscNode.type = 'sine';
+  oscNode.frequency.setValueAtTime(0, audioCtx.currentTime);
 
   oscNode.connect(gainNode);
 

@@ -28,6 +28,7 @@ export const naturalMajorScales: Record<NoteNames, NoteNames[]> = {
     NoteNames.F,
     NoteNames.GFlat,
     NoteNames.AFlat,
+    NoteNames.BFlat,
     NoteNames.C,
   ],
 
@@ -99,7 +100,7 @@ export const naturalMajorScales: Record<NoteNames, NoteNames[]> = {
     NoteNames.B,
     NoteNames.C,
     NoteNames.D,
-    NoteNames.G,
+    NoteNames.E,
     NoteNames.FSharp,
   ],
 
