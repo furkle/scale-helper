@@ -5,25 +5,36 @@ import { Scale } from './Scale';
 import { ScalePatterns } from './ScalePatterns';
 import { scaleRecord } from './scaleRecord';
 
-export const GetScale = (root: NoteNames, pattern: ScalePatterns, octave = 4): Scale => {
+export const GetScale = (root: NoteNames, pattern: ScalePatterns, rootOctave = 4): Scale => {
   return {
     root,
-    notes: getScaleNotes(root, pattern, octave),
+    notes: getScaleNotes(root, pattern, rootOctave),
   };
 };
 
 export const getScaleNotes = (root: NoteNames, pattern: ScalePatterns, octave = 4): Scale['notes'] => {
-  return scaleRecord[pattern][root].map((noteBase) => ({
-    name: noteBase,
-    get frequency() {
-      return getFrequency(this.name, this.octave);
-    },
-  
-    octave,
-  }));
+  let incrementedOctave = false;
+  let curOctave = octave;
+  return scaleRecord[pattern][root].map((noteBase, idx) => {
+    if (idx &&
+      !incrementedOctave &&
+      (noteBase === NoteNames.CFlat || noteBase === NoteNames.C || noteBase === NoteNames.CSharp))
+    {
+      curOctave += 1;
+      incrementedOctave = true;
+    }
+
+    return {
+      name: noteBase,
+      octave: curOctave,
+      get frequency() {
+        return getFrequency(this.name, this.octave);
+      },
+    };
+  });
 };
 
-export const BaseNotes: Record<NoteNames, Note> = Object.values(NoteNames).reduce((notes, name) => {
+export const BaseNotes: Record<NoteNames, Note> = (Object.values(NoteNames) as NoteNames[]).reduce((notes, name) => {
   notes[name] = {
     name,
     get frequency() {
