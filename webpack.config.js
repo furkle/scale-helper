@@ -1,8 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
-  entry: './src/frontend/frontend.tsx',
+  mode: 'development', // 'production',
+  entry: './src/frontend/index.tsx',
   module: {
     rules: [
       {

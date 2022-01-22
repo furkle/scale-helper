@@ -1,4 +1,5 @@
 export enum NoteNames {
+  CFlat = 'CFlat',
   C = 'C',
   CSharp = 'CSharp',
   DFlat = 'DFlat',
@@ -16,5 +17,4 @@ export enum NoteNames {
   ASharp = 'ASharp',
   BFlat = 'BFlat',
   B = 'B',
-  CFlat = 'CFlat',
 }
