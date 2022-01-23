@@ -62,6 +62,7 @@ export const Chords = ({
       audioCtx,
       gainNode,
       oscNode,
+      chordInversion: curState.chordInversion,
       chordRoot: curState.chordRoot,
       chordSize: curState.chordSize,
       chordType: curState.chordType,
