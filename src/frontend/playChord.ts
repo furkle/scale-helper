@@ -12,14 +12,7 @@ export type ChordPlayerOptions = {
 };
 
 export const playChord = (args: ChordPlayerOptions) => {
-  const {
-    audioCtx,
-    gainNode,
-    oscNode,
-    chordRoot,
-    chordSize,
-    chordType,
-  } = args;
+  const { chordSize } = args;
 
   if (chordSize === ChordSizes.Power) {
     playTwoNoteChord(args);

@@ -1,13 +1,17 @@
 import React from 'react';
+
+import { chordSizesFilter } from '../chordSizesFilter';
 import { ChordSizes } from '../../ChordSizes';
-import { ChordTypes } from '../../ChordTypes';
-import { NoteNames } from '../../NoteNames';
-import { BaseNotes } from '../../scales';
 import { ChordText } from '../components/ChordText';
+import { ChordTypes } from '../../ChordTypes';
 import { includeDuplicateNames } from '../includeDuplicateNames';
-import { playChord } from '../playChord';
-import { transformNoteName } from '../transformNoteName';
 import { noteFilter } from './Notes';
+import { NoteNames } from '../../NoteNames';
+import { playChord } from '../playChord';
+import { setChordType } from '../setChordType';
+import { BaseNotes } from '../../scales';
+import { transformNoteName } from '../transformNoteName';
+import { transformNotationToArgs } from '../transformNotationToArgs';
 
 export const Chords = ({
   audioCtx,
@@ -36,19 +40,14 @@ export const Chords = ({
     });
   };
 
-  const setChordType: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    setCurState({
-      ...curState,
-      chordType: e.target.value as ChordTypes,
-    });
-  };
-
   const setChordSize: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     setCurState({
       ...curState,
       chordSize: e.target.value as ChordSizes,
     });
   };
+
+  const setChordTypeFunc = setChordType.bind(null, curState, setCurState);
 
   const playOptionsChord = () => {
     playChord({
@@ -62,30 +61,10 @@ export const Chords = ({
   };
 
   const playCustomChords = () => {
-
+    playChord(transformNotationToArgs(curState.customChordsInput));
   };
 
-  const optionList = Object.values(ChordSizes).filter((size) => {
-    if (curState.chordType === ChordTypes.Power) {
-      return size === ChordSizes.Power;
-    } else if (curState.chordType === ChordTypes.Augmented) {
-      return size === ChordSizes.Triad || size === ChordSizes.Seventh;
-    } else if (curState.chordType === ChordTypes.Diminished) {
-      return size === ChordSizes.Triad || size === ChordSizes.Seventh;
-    } else if (curState.chordType === ChordTypes.Dominant) {
-      return size === ChordSizes.Seventh;
-    } else if (curState.chordType === ChordTypes.Major) {
-      return size === ChordSizes.Triad ||
-        size === ChordSizes.Sixth ||
-        size === ChordSizes.Seventh;
-    } else if (curState.chordType === ChordTypes.Minor) {
-      return size === ChordSizes.Triad ||
-        size === ChordSizes.Sixth ||
-        size === ChordSizes.Seventh;
-    } else if (curState.chordType === ChordTypes.Suspended) {
-      return size === ChordSizes.Second || size === ChordSizes.Fourth;
-    }
-  });
+  const sizeOptionList = chordSizesFilter(Object.values(ChordSizes), curState.chordType);
 
   return (
     <div>
@@ -114,7 +93,7 @@ export const Chords = ({
         <div>
           <div>
             <span>Chord root</span>
-            <select onChange={setChordRoot} >
+            <select  onChange={setChordRoot} >
               {Object.values(BaseNotes).filter(noteFilter).map((note) => (
                 <option
                   key={note.name}
@@ -128,7 +107,7 @@ export const Chords = ({
 
           <div>
             <span>Chord type</span>
-            <select onChange={setChordType}>
+            <select onChange={setChordTypeFunc}>
               {Object.values(ChordTypes).map((chordType) => (
                 <option
                   key={chordType}
@@ -144,10 +123,10 @@ export const Chords = ({
             <span>Chord size</span>
             <select
               onChange={setChordSize}
-              disabled={optionList.length === 1}
+              disabled={sizeOptionList.length === 1}
               value={curState.chordSize}
             >
-              {optionList.map((chordSize) => (
+              {sizeOptionList.map((chordSize) => (
                 <option
                   key={chordSize}
                   value={chordSize}
