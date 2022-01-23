@@ -19,9 +19,10 @@ export const Chords = ({
   oscNode,
 }: { audioCtx: AudioContext, gainNode: GainNode, oscNode: OscillatorNode }) => {
   const [ curState, setCurState ] = React.useState({
+    chordInversion: 0,
     chordRoot: NoteNames.C,
-    chordType: ChordTypes.Major,
     chordSize: ChordSizes.Triad,
+    chordType: ChordTypes.Major,
     custom: false,
     customChordsInput: '',
   });
@@ -30,6 +31,13 @@ export const Chords = ({
     setCurState({
       ...curState,
       custom: !curState.custom,
+    });
+  };
+
+  const setChordInversion: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    setCurState({
+      ...curState,
+      chordInversion: Number(e.target.value),
     });
   };
 
@@ -134,6 +142,16 @@ export const Chords = ({
                   {chordSize}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div>
+            <span>Chord inversion</span>
+            <select onChange={setChordInversion}>
+              <option value={0}>None</option>
+              <option value={1}>1st inversion</option>
+              <option value={2}>2nd inversion</option>
+              <option value={3}>3rd inversion</option>
             </select>
           </div>
 

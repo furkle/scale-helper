@@ -4,14 +4,16 @@ import { NoteNames } from '../NoteNames';
 
 export const setChordType = (
   curState: {
+    chordInversion: number,
     chordRoot: NoteNames,
-    chordType: ChordTypes,
     chordSize: ChordSizes,
+    chordType: ChordTypes,
     custom: boolean,
     customChordsInput: string,
   },
 
   setCurState: React.Dispatch<React.SetStateAction<{
+    chordInversion: number,
     chordRoot: NoteNames;
     chordType: ChordTypes;
     chordSize: ChordSizes;
