@@ -5,6 +5,7 @@ import { NoteNames } from '../../NoteNames';
 import { BaseNotes } from '../../scales';
 import { ChordText } from '../components/ChordText';
 import { includeDuplicateNames } from '../includeDuplicateNames';
+import { playChord } from '../playChord';
 import { transformNoteName } from '../transformNoteName';
 import { noteFilter } from './Notes';
 
@@ -50,7 +51,14 @@ export const Chords = ({
   };
 
   const playOptionsChord = () => {
-
+    playChord({
+      audioCtx,
+      gainNode,
+      oscNode,
+      chordRoot: curState.chordRoot,
+      chordSize: curState.chordSize,
+      chordType: curState.chordType,
+    });
   };
 
   const playCustomChords = () => {
