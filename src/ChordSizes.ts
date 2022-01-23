@@ -6,7 +6,6 @@ export enum ChordSizes {
   Ninth = 'Ninth',
   Eleventh = 'Eleventh',
   Thirteenth = 'Thirteenth',
-  Dominant = 'Dominant',
   Second = 'Second',
   Fourth = 'Fourth',
 }
