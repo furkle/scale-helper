@@ -4,7 +4,7 @@ import { BaseNotes } from '../../scales';
 import { Note } from '../components/Note';
 import { Note as NoteType } from '../../Note';
 
-const noteFilter = (val: NoteType) => (
+export const noteFilter = (val: NoteType) => (
   val !== BaseNotes.CFlat &&
     val !== BaseNotes.DFlat &&
     val !== BaseNotes.EFlat &&
