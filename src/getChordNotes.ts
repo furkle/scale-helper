@@ -3,7 +3,7 @@ import { ChordSizes } from './ChordSizes';
 import { ChordTypes } from './ChordTypes';
 import { NoteNames } from './NoteNames';
 
-export const getChordNotes = ({
+/*export const getChordNotes = ({
   chordInversion,
   chordRoot,
   chordSize,
@@ -331,5 +331,6 @@ export const handleInversion = (
     ];
   }
 
-  return retArr;;
+  return retArr;
 };
+*/

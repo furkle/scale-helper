@@ -1,6 +1,6 @@
 import { ChordSizes } from '../ChordSizes';
 import { ChordTypes } from '../ChordTypes';
-import { getChordNotes } from '../getChordNotes';
+// import { getChordNotes } from '../getChordNotes';
 import { Note } from '../Note';
 import { NoteNames } from '../NoteNames';
 import { BaseNotes } from '../scales';
@@ -9,6 +9,7 @@ export type ChordPlayerOptions = {
   audioCtx: AudioContext;
   gainNode: GainNode;
   oscNode: OscillatorNode;
+  baseOctave: number;
   chordInversion: number;
   chordRoot: NoteNames;
   chordSize: ChordSizes;
@@ -20,7 +21,7 @@ export const playChord = (args: ChordPlayerOptions) => {
 
   const twelveTones = Object.values(BaseNotes).map(({ name }) => name);
 
-  const chordNotes = getChordNotes(args);
+  const chordNotes = [] as any;//getChordNotes(args);
   const nodes = getChordAudioNodes(audioCtx, chordNotes.length);
 
   let curOctave = 4;
@@ -56,7 +57,6 @@ export const getChordAudioNodes = (audioCtx: AudioContext, num: number): Array<[
 
     const oscNode = audioCtx.createOscillator();
     oscNode.connect(gainNode);
-    oscNode.start();
 
     retArr.push([
       gainNode,

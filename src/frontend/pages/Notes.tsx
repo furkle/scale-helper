@@ -18,21 +18,43 @@ export const Notes = ({
   gainNode,
   oscNode,
 }: { audioCtx: AudioContext, gainNode: GainNode, oscNode: OscillatorNode }) => {
-    return (
+  const [ octave, setOctave ] = React.useState(4);
+
+  const notes = Object.values(BaseNotes).filter(noteFilter);
+  notes.forEach((note) => {
+    note.octave = octave;
+  });
+
+  const setOctaveFunc: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setOctave(Number(e.target.value));
+  };
+
+  return (
+    <div>
+      <h2>Notes</h2>
       <div>
-        <h2>Notes</h2>
-        <ul>
-          {Object.values(BaseNotes).filter(noteFilter).map((note) => (
-            <li key={note.name}>
-              <Note
-                audioCtx={audioCtx}
-                data={note}
-                gainNode={gainNode}
-                oscNode={oscNode}
-              />
-            </li>
-          ))}
-        </ul>
+        <h3>Current octave</h3>
+        <input
+          type="number"
+          value={octave}
+          min={0}
+          max={8}
+          onChange={setOctaveFunc}
+        />
       </div>
-    );
+
+      <ul>
+        {notes.map((note) => (
+          <li key={note.name}>
+            <Note
+              audioCtx={audioCtx}
+              data={note}
+              gainNode={gainNode}
+              oscNode={oscNode}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };

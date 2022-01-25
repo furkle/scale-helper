@@ -62,6 +62,7 @@ export const Chords = ({
       audioCtx,
       gainNode,
       oscNode,
+      baseOctave: 4,
       chordInversion: curState.chordInversion,
       chordRoot: curState.chordRoot,
       chordSize: curState.chordSize,
@@ -70,7 +71,13 @@ export const Chords = ({
   };
 
   const playCustomChords = () => {
-    playChord(transformNotationToArgs(curState.customChordsInput));
+    /*playChord({
+      audioCtx,
+      gainNode,
+      oscNode,
+      baseOctave: 4,
+      ...transformNotationToArgs(curState.customChordsInput),
+    });*/
   };
 
   const sizeOptionList = chordSizesFilter(Object.values(ChordSizes), curState.chordType);
@@ -79,7 +86,7 @@ export const Chords = ({
     <div>
       <h2>Chords</h2>
       <div>
-        <span>Custom/multi chord entry</span>
+        <h3>Custom/multi chord entry</h3>
         <input
           checked={curState.custom}
           onChange={toggleCustomEntry}
@@ -101,7 +108,7 @@ export const Chords = ({
       {!curState.custom ?
         <div>
           <div>
-            <span>Chord root</span>
+            <h3>Chord root</h3>
             <select  onChange={setChordRoot} >
               {Object.values(BaseNotes).filter(noteFilter).map((note) => (
                 <option
@@ -115,7 +122,7 @@ export const Chords = ({
           </div>
 
           <div>
-            <span>Chord type</span>
+            <h3>Chord type</h3>
             <select onChange={setChordTypeFunc}>
               {Object.values(ChordTypes).map((chordType) => (
                 <option
@@ -129,7 +136,7 @@ export const Chords = ({
           </div>
 
           <div>
-            <span>Chord size</span>
+            <h3>Chord size</h3>
             <select
               onChange={setChordSize}
               disabled={sizeOptionList.length === 1}
@@ -147,7 +154,7 @@ export const Chords = ({
           </div>
 
           <div>
-            <span>Chord inversion</span>
+            <h3>Chord inversion</h3>
             <select onChange={setChordInversion}>
               <option value={0}>None</option>
               <option value={1}>1st inversion</option>
