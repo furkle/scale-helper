@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { chordSizesFilter } from '../chordSizesFilter';
+import { ChordInversionSelect } from '../components/ChordInversionSelect';
+import { ChordNotationCustomEntry } from '../components/ChordNotationCustomEntry';
+import { ChordRootSelect } from '../components/ChordRootSelect';
+import { ChordSizeSelect } from '../components/ChordSizeSelect';
 import { ChordSizes } from '../../ChordSizes';
+import { chordSizesFilter } from '../chordSizesFilter';
 import { ChordText } from '../components/ChordText';
 import { ChordTypes } from '../../ChordTypes';
-import { includeDuplicateNames } from '../includeDuplicateNames';
-import { noteFilter } from './Notes';
+import { ChordTypeSelect } from '../components/ChordTypeSelect';
 import { NoteNames } from '../../NoteNames';
 import { playChord } from '../playChord';
 import { setChordType } from '../setChordType';
-import { BaseNotes } from '../../scales';
-import { transformNoteName } from '../transformNoteName';
-import { transformNotationToArgs } from '../transformNotationToArgs';
 
 export const Chords = ({
   audioCtx,
@@ -85,83 +85,27 @@ export const Chords = ({
   return (
     <div>
       <h2>Chords</h2>
-      <div>
-        <h3>Custom/multi chord entry</h3>
-        <input
-          checked={curState.custom}
-          onChange={toggleCustomEntry}
-          type="checkbox"
-        />
-      </div>
 
-      {curState.custom ?
-        <div>
-          <input
-            value={curState.customChordsInput}
-            placeholder="Enter chord notation"
-          />
-
-          <button onClick={playCustomChords}>Play custom chords</button>
-        </div> :
-        null}
+      <ChordNotationCustomEntry
+        inputValue={curState.customChordsInput}
+        isChecked={curState.custom}
+        playCustomChords={playCustomChords}
+        toggleCustomEntry={toggleCustomEntry}
+      />
 
       {!curState.custom ?
         <div>
-          <div>
-            <h3>Chord root</h3>
-            <select  onChange={setChordRoot} >
-              {Object.values(BaseNotes).filter(noteFilter).map((note) => (
-                <option
-                  key={note.name}
-                  value={note.name}
-                >
-                  {transformNoteName(includeDuplicateNames(note.name))}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ChordRootSelect setChordRoot={setChordRoot} />
+          
+          <ChordTypeSelect setChordType={setChordTypeFunc} />
 
-          <div>
-            <h3>Chord type</h3>
-            <select onChange={setChordTypeFunc}>
-              {Object.values(ChordTypes).map((chordType) => (
-                <option
-                  key={chordType}
-                  value={chordType}
-                >
-                  {chordType}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ChordSizeSelect
+            chordSize={curState.chordSize}
+            setChordSize={setChordSize}
+            sizeOptionList={sizeOptionList}
+          />
 
-          <div>
-            <h3>Chord size</h3>
-            <select
-              onChange={setChordSize}
-              disabled={sizeOptionList.length === 1}
-              value={curState.chordSize}
-            >
-              {sizeOptionList.map((chordSize) => (
-                <option
-                  key={chordSize}
-                  value={chordSize}
-                >
-                  {chordSize}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <h3>Chord inversion</h3>
-            <select onChange={setChordInversion}>
-              <option value={0}>None</option>
-              <option value={1}>1st inversion</option>
-              <option value={2}>2nd inversion</option>
-              <option value={3}>3rd inversion</option>
-            </select>
-          </div>
+          <ChordInversionSelect setChordInversion={setChordInversion} />
 
           <ChordText
             chordRoot={curState.chordRoot}
